@@ -1,4 +1,3 @@
-import json
 import xml.etree.ElementTree as ET
 from collections import OrderedDict
 
@@ -37,7 +36,7 @@ class Asos:
 
         params = {
             'serviceKey': self.args.asos_key,
-            'page': 1,
+            'pageNo': 1,
             'numOfRows': 72,
             'dataType': self.args.data_type,
             'dataCd': 'ASOS',

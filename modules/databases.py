@@ -109,25 +109,31 @@ def connect_maria(args):
 
 def insert_data(args, conn, date, pred=None, ws=None, wh=None):
     cursor = conn.cursor()
-    default = f'INSERT INTO {args.mdb_name} (date, location, generator'
-    try:
-        if (pred is not None) and (ws is not None) and (wh is not None):
-            sql = f'''{default}, ap, ws, wh) VALUES  ("{date}", "{args.location}", "{args.gen_name}", "{list(pred)}", "{list(ws)}", "{list(wh)}");'''
-        elif (pred is not None) and (ws is not None) and (wh is None):
-            sql = f'''{default}, ap, ws) VALUES  ("{date}", "{args.location}", "{args.gen_name}", "{list(pred)}", "{list(ws)}");'''
-        elif (pred is not None) and (ws is None) and (wh is not None):
-            sql = f'''{default}, ap, wh) VALUES  ("{date}", "{args.location}", "{args.gen_name}", "{list(pred)}", "{list(wh)}");'''
-        elif (pred is None) and (ws is not None) and (wh is not None):
-            sql = f'''{default}, ws, wh) VALUES  ("{date}", "{args.location}", "{args.gen_name}", "{list(ws)}", "{list(wh)}");'''
-        elif (pred is not None) and (ws is None) and (wh is None):
-            sql = f'''{default}, ap) VALUES  ("{date}", "{args.location}", "{args.gen_name}", "{list(pred)}");'''
-        elif (pred is None) and (ws is not None) and (wh is None):
-            sql = f'''{default}, ws) VALUES  ("{date}", "{args.location}", "{args.gen_name}", "{list(ws)}");'''
-        elif (pred is None) and (ws is None) and (wh is not None):
-            sql = f'''{default}, wh) VALUES  ("{date}", "{args.location}", "{args.gen_name}", "{list(wh)}");'''
-        else:
-            raise f'check your data'
-        cursor.execute(sql)
+    if args.location == 'jeju':
+        ltype = 'sea'
+    else:
+        ltype = 'ground'
 
-    except Exception as err:
-        print(err)
+    sql = f"INSERT INTO date_table VALUES (NULL, {date}, {ltype});"
+    cursor.execute(sql)
+
+    if pred is not None:
+        pred_sql = f"INSERT INTO power_table VALUES (NULL, {date}, {ltype}, {args.gen_name}, {pred[0]}, {pred[1]}, {pred[2]}," \
+                   f"{pred[3]}, {pred[4]}, {pred[5]}, {pred[6]}, {pred[7]}, {pred[8]}, {pred[9]}, {pred[10]}, {pred[11]}," \
+                   f"{pred[12]}, {pred[13]}, {pred[14]}, {pred[15]}, {pred[16]}, {pred[17]}, {pred[18]}, {pred[19]}, " \
+                   f"{pred[20]}, {pred[21]}, {pred[22]}, {pred[23]})"
+        cursor.execute(pred_sql)
+
+    if ws is not None:
+        ws_sql = f"INSERT INTO wind_table VALUES (NULL, {date}, {ltype}, {args.gen_name}, {ws[0]}, {ws[1]}, {ws[2]}," \
+                 f"{ws[3]}, {ws[4]}, {ws[5]}, {ws[6]}, {ws[7]}, {ws[8]}, {ws[9]}, {ws[10]}, {ws[11]}," \
+                 f"{ws[12]}, {ws[13]}, {ws[14]}, {ws[15]}, {ws[16]}, {ws[17]}, {ws[18]}, {ws[19]}, " \
+                 f"{ws[20]}, {ws[21]}, {ws[22]}, {ws[23]})"
+        cursor.execute(ws_sql)
+
+    if wh is not None:
+        wh_sql = f"INSERT INTO height_table VALUES (NULL, {date}, {ltype}, {args.gen_name}, {wh[0]}, {wh[1]}, {wh[2]}," \
+                 f"{wh[3]}, {wh[4]}, {wh[5]}, {wh[6]}, {wh[7]}, {wh[8]}, {wh[9]}, {wh[10]}, {wh[11]}," \
+                 f"{wh[12]}, {wh[13]}, {wh[14]}, {wh[15]}, {wh[16]}, {wh[17]}, {wh[18]}, {wh[19]}, " \
+                 f"{wh[20]}, {wh[21]}, {wh[22]}, {wh[23]})"
+        cursor.execute(wh_sql)
