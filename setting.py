@@ -7,8 +7,8 @@ def define_args():
 
     # Database Setting
     args.old = True
-    args.host = '211.240.98.175'
-    args.port = 27017
+    args.host = '*'
+    args.port = '*'
 
     args.mport = 3367
     args.user = 'dev'

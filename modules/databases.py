@@ -114,26 +114,26 @@ def insert_data(args, conn, date, pred=None, ws=None, wh=None):
     else:
         ltype = 'ground'
 
-    sql = f"INSERT INTO date_table VALUES (NULL, {date}, {ltype});"
+    sql = f"""INSERT INTO date_table VALUES (NULL, "{date}", "{ltype}");"""
     cursor.execute(sql)
 
     if pred is not None:
-        pred_sql = f"INSERT INTO power_table VALUES (NULL, {date}, {ltype}, {args.gen_name}, {pred[0]}, {pred[1]}, {pred[2]}," \
-                   f"{pred[3]}, {pred[4]}, {pred[5]}, {pred[6]}, {pred[7]}, {pred[8]}, {pred[9]}, {pred[10]}, {pred[11]}," \
-                   f"{pred[12]}, {pred[13]}, {pred[14]}, {pred[15]}, {pred[16]}, {pred[17]}, {pred[18]}, {pred[19]}, " \
-                   f"{pred[20]}, {pred[21]}, {pred[22]}, {pred[23]})"
+        pred_sql = f"""INSERT INTO power_table VALUES (NULL, "{date}", "{ltype}", "{args.location}", "{args.gen_name}", 
+        {pred[0]}, {pred[1]}, {pred[2]}, {pred[3]}, {pred[4]}, {pred[5]}, {pred[6]}, {pred[7]}, {pred[8]}, {pred[9]}, 
+        {pred[10]}, {pred[11]}, {pred[12]}, {pred[13]}, {pred[14]}, {pred[15]}, {pred[16]}, {pred[17]}, {pred[18]}, 
+        {pred[19]}, {pred[20]}, {pred[21]}, {pred[22]}, {pred[23]})"""
         cursor.execute(pred_sql)
 
     if ws is not None:
-        ws_sql = f"INSERT INTO wind_table VALUES (NULL, {date}, {ltype}, {args.gen_name}, {ws[0]}, {ws[1]}, {ws[2]}," \
-                 f"{ws[3]}, {ws[4]}, {ws[5]}, {ws[6]}, {ws[7]}, {ws[8]}, {ws[9]}, {ws[10]}, {ws[11]}," \
-                 f"{ws[12]}, {ws[13]}, {ws[14]}, {ws[15]}, {ws[16]}, {ws[17]}, {ws[18]}, {ws[19]}, " \
-                 f"{ws[20]}, {ws[21]}, {ws[22]}, {ws[23]})"
+        ws_sql = f"""INSERT INTO wind_table VALUES (NULL, "{date}", "{ltype}", "{args.location}", "{args.gen_name}", 
+        {ws[0]}, {ws[1]}, {ws[2]}, {ws[3]}, {ws[4]}, {ws[5]}, {ws[6]}, {ws[7]}, {ws[8]}, {ws[9]}, 
+        {ws[10]}, {ws[11]}, {ws[12]}, {ws[13]}, {ws[14]}, {ws[15]}, {ws[16]}, {ws[17]}, {ws[18]}, 
+        {ws[19]}, {ws[20]}, {ws[21]}, {ws[22]}, {ws[23]})"""
         cursor.execute(ws_sql)
 
     if wh is not None:
-        wh_sql = f"INSERT INTO height_table VALUES (NULL, {date}, {ltype}, {args.gen_name}, {wh[0]}, {wh[1]}, {wh[2]}," \
-                 f"{wh[3]}, {wh[4]}, {wh[5]}, {wh[6]}, {wh[7]}, {wh[8]}, {wh[9]}, {wh[10]}, {wh[11]}," \
-                 f"{wh[12]}, {wh[13]}, {wh[14]}, {wh[15]}, {wh[16]}, {wh[17]}, {wh[18]}, {wh[19]}, " \
-                 f"{wh[20]}, {wh[21]}, {wh[22]}, {wh[23]})"
+        wh_sql = f"""INSERT INTO height_table VALUES (NULL, "{date}", "{ltype}", "{args.location}", "{args.gen_name}", 
+        {wg[0]}, {wg[1]}, {wg[2]}, {wg[3]}, {wg[4]}, {wg[5]}, {wg[6]}, {wg[7]}, {wg[8]}, {wg[9]}, 
+        {wg[10]}, {wg[11]}, {wg[12]}, {wg[13]}, {wg[14]}, {wg[15]}, {wg[16]}, {wg[17]}, {wg[18]}, 
+        {wg[19]}, {wg[20]}, {wg[21]}, {wg[22]}, {wg[23]})"""
         cursor.execute(wh_sql)
